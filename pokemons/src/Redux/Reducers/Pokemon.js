@@ -11,7 +11,7 @@ const initialState = {
     specialAttack: '',
     specialDefense: '',
     description: '',
-    types: [ 'Water']
+    types: [ ]
 }
 
 export default (state = initialState, { type, payload } ) => {

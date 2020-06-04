@@ -1,4 +1,5 @@
-import { ADD_POKEMONS, TOTAL_COUNT_POKEMONS, PAGINATION, COUNT_OF_PORTION, CURRENT_PAGE } from '../../constants'
+import { ADD_POKEMONS, TOTAL_COUNT_POKEMONS, PAGINATION, COUNT_OF_PORTION, CURRENT_PAGE,
+    FILTER_POKEMONS } from '../../constants'
 
 const initialState = {
     pokemon: null,

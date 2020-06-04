@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PokemonCard from './PokemonCard'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { ADD_POKEMONS, PAGINATION, TOTAL_COUNT_POKEMONS, CURRENT_PAGE } from '../constants'
+import { ADD_POKEMONS, PAGINATION, TOTAL_COUNT_POKEMONS, CURRENT_PAGE, FILTER_POKEMONS } from '../constants'
 import Filter from './Filter'
 import Pagination from './Pagination'
 import store from '../Redux/Store'
@@ -13,8 +13,9 @@ class PokemonList extends Component {
         super(props);
         this.filterTypes = this.filterTypes.bind(this);
         this.state = {
-        dataind_pokemon_types: null,
+        find_pokemon_types: null,
         isFilter: true,
+        count: null,
         types: [
             'fire','water','ice','dragon','fighting',
             'flying','grass','rock','ground','fairy',
@@ -33,12 +34,13 @@ class PokemonList extends Component {
             this.setState({
                 find_pokemon_types: resp.data.pokemon,
                 isFilter: false
-            });
+            })
             /*store.dispatch((dispatch) => {
+                console.log('NY VOT: ', resp.data.pokemon);
                 dispatch({
-                    type: ADD_POKEMONS,
+                    type: FILTER_POKEMONS,
                     payload: resp.data.pokemon
-                })
+                });
             })*/
         })
     }
@@ -61,7 +63,7 @@ class PokemonList extends Component {
             })
         })
     }
-    /*попробувати без заміни*/ 
+    
     async componentDidMount(){
         let url = `https://pokeapi.co/api/v2/pokemon/?offset=0&limit=15`;
         url = url.replace(/offset=\d+/, `offset=${(this.props.currentPage * 15) - 15}`);
@@ -84,65 +86,7 @@ class PokemonList extends Component {
 
         const { pokemons, filtered } = this.props;
 
-        return(   
-            /*<div className = 'wrapper'>
-                 <Pagination currentPage = { this.props.currentPage } nextPage={ this.nextPage } />
-                  <Filter filterTypes = { this.filterTypes } types = { this.state.types } />
-                 <div>
-                     {this.state.isFilter ? (
-                         <div>
-                             {pokemons ? (
-                                 <div className = 'card'>
-                                     {pokemons.map(pokm => {
-                                          return  <PokemonCard pokmname={pokm.name} url={ pokm.url } key={pokm.name} />
-                                     })}
-                                     </div>
-                             ):(<h1>ZAGRUZULOSIA</h1>)}
-                             </div>
-                     ):(
-                        <div>
-                        {pokemons ? (
-                            <div className = 'card'>
-                                {pokemons.map(pokm => {
-                                     return  <PokemonCard pokmname={pokm.pokemon.name} url={ pokm.pokemon.url } 
-                                     key={pokm.pokemon.name} />
-                                })}
-                                </div>
-                        ):(<h1>аоо</h1>)}
-                        </div>
-                     )}
-                     </div>
-                </div>*/
-           /* <div className = 'wrapper'>
-                <Pagination currentPage = { this.props.currentPage } nextPage={ this.nextPage } />
-                <div> 
-                    <Filter filterTypes = { this.filterTypes } types = { this.state.types } />
-                    </div>
-                    <div>
-                {this.state.isFilter ? (
-                    <div>
-                        {pokemons ? (
-                           <div className='card' >
-                           {pokemons.map(pokm => {
-                              return  <PokemonCard pokmname={pokm.name} url={ pokm.url } key={pokm.name} />
-                           })}
-                       </div>
-                        ):(<h1>NE ZAGRUZULOSIA</h1>)}
-                        </div>
-                ):(
-                    <div>
-                        {this.state.find_pokemon_types ? (
-                            <div>
-                                {this.state.find_pokemon_types.map(pokm =>{
-                                    return  <PokemonCard pokmname={pokm.pokemon.name} url={ pokm.pokemon.url } 
-                                    key={pokm.pokemon.name} />
-                                })}
-                                </div>
-                        ):(<h1>VOOBSHE</h1>)}
-                        </div>
-                )}
-                </div>
-                </div>*/     
+        return(            
             <div className = 'wrapper'>  
                 <Filter filterTypes = { this.filterTypes } types = { this.state.types } />
                 <div>
